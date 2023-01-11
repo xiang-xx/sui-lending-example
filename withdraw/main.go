@@ -17,35 +17,35 @@ const (
 
 func main() {
 	usdtPoolObject, err := types.NewHexData(usdtPool)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	acc := common.GetEnvAccount()
 	client := common.GetDevClient()
 	contract := common.GetDefaultContract()
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	signer, err := types.NewHexData(acc.Address)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	ctx := context.Background()
 	coins, err := client.GetSuiCoinsOwnedByAddress(ctx, *signer)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	gasCoin, err := coins.PickCoinNoLess(10000)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 
 	tx, err := contract.Withdraw(context.Background(), *signer, []string{
 		usdtAddress,
 	}, gosuilending.WithdrawArgs{
 		WormholeMessageCoins:  []types.ObjectId{},
-		WormholeMessageAmount: 0,
+		WormholeMessageAmount: "0",
 		Pool:                  *usdtPoolObject,
-		DstChain:              1,
-		Amount:                49999999,
+		DstChain:              "1",
+		Amount:                "49999999",
 	}, gosuilending.CallOptions{
 		Gas:       &gasCoin.Reference.ObjectId,
 		GasBudget: 10000,
 	})
-	common.PanicIfError(err)
+	common.AssertNil(err)
 
 	signedTx := tx.SignWith(acc.PrivateKey)
 	resp, err := client.ExecuteTransaction(ctx, *signedTx, types.TxnRequestTypeWaitForLocalExecution)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	fmt.Println(resp.EffectsCert.Certificate.TransactionDigest)
 }

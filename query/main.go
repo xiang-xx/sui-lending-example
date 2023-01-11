@@ -20,12 +20,12 @@ func main() {
 	client := common.GetDevClient()
 	contract := common.GetDefaultContract()
 	signer, err := types.NewHexData(acc.Address)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	ctx := context.Background()
 	coins, err := client.GetSuiCoinsOwnedByAddress(ctx, *signer)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	gasCoin, err := coins.PickCoinNoLess(10000)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 
 	callOptions := gosuilending.CallOptions{
 		Gas:       &gasCoin.Reference.ObjectId,
@@ -33,27 +33,27 @@ func main() {
 	}
 
 	liquid, err := contract.GetDolaTokenLiquidity(ctx, *signer, usdtAddress, callOptions)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	println("dola token liquidity:", liquid.String())
 
 	appTokenLiquidity, err := contract.GetAppTokenLiquidity(ctx, *signer, 0, usdtAddress, callOptions)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	println("app token liquidity:", appTokenLiquidity.String())
 
 	debtAmount, debtValue, err := contract.GetUserTokenDebt(ctx, *signer, btcAddress, callOptions)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	println("user btc token debt", debtAmount.String(), " ", debtValue.String())
 
 	collateralAmount, collateralValue, err := contract.GetUserCollateral(ctx, *signer, usdtAddress, callOptions)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	println("collateral: ", collateralAmount.String(), " ", collateralValue.String())
 
 	userLendingInfo, err := contract.GetUserLendingInfo(ctx, *signer, callOptions)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	fmt.Printf("lending info %v\n", userLendingInfo)
 
 	reserveInfo, err := contract.GetReserveInfo(ctx, *signer, usdtAddress, callOptions)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	fmt.Printf("%v\n", reserveInfo)
 
 	// canBorrowAmount, err := contract.GetUserAllowedBorrow(ctx, *signer, usdtAddress, callOptions)

@@ -11,42 +11,39 @@ import (
 	gosuilending "github.com/omnibtc/go-sui-lending"
 )
 
-const (
-	btcAddress = "0x13e8531463853d9a3ff017d140be14a9357f6b1d::coins::BTC"
-	btcPool    = "0x2240c0e485c4c86a68edba2f8797ca3bcab5366a"
-)
-
 func main() {
-	btcPoolObject, err := types.NewHexData(btcPool)
-	common.PanicIfError(err)
+	config := common.GetSuiConfig()
+	btcPoolObject, err := types.NewHexData(config.PoolBTC)
+	common.AssertNil(err)
 	acc := common.GetEnvAccount()
 	client := common.GetDevClient()
 	contract := common.GetDefaultContract()
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	signer, err := types.NewHexData(acc.Address)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	ctx := context.Background()
 	coins, err := client.GetSuiCoinsOwnedByAddress(ctx, *signer)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	gasCoin, err := coins.PickCoinNoLess(10000)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 
 	tx, err := contract.Borrow(context.Background(), *signer, []string{
-		btcAddress,
+		config.BTC,
 	}, gosuilending.BorrowArgs{
+		Receiver:              acc.Address,
 		WormholeMessageCoins:  []types.ObjectId{},
-		WormholeMessageAmount: 0,
+		WormholeMessageAmount: "0",
 		Pool:                  *btcPoolObject,
-		DstChain:              1,
-		Amount:                200,
+		DstChain:              "1",
+		Amount:                "200",
 	}, gosuilending.CallOptions{
 		Gas:       &gasCoin.Reference.ObjectId,
 		GasBudget: 10000,
 	})
-	common.PanicIfError(err)
+	common.AssertNil(err)
 
 	signedTx := tx.SignWith(acc.PrivateKey)
 	resp, err := client.ExecuteTransaction(ctx, *signedTx, types.TxnRequestTypeWaitForLocalExecution)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	fmt.Println(resp.EffectsCert.Certificate.TransactionDigest)
 }

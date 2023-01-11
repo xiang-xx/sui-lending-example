@@ -1,7 +1,11 @@
 package common
 
 import (
+	_ "embed"
+	"encoding/json"
+	"fmt"
 	"os"
+	"strings"
 
 	"github.com/coming-chat/go-sui/account"
 	"github.com/coming-chat/go-sui/client"
@@ -9,35 +13,96 @@ import (
 )
 
 const DevnetRpcUrl = "https://fullnode.devnet.sui.io"
+const (
+	PackageLendingPortal      = "0x28bc45ed3593846a57fd3bea2839baa406f4d666"
+	PackageExternalInterfaces = "0x20c2b9cb6d88de7dcf2b6ba98900058e1d58781c"
+	PackageWormholeBridge     = "0x0979dcaa8d5549a4d6cc4783fe5ef093d5e32c35"
+	PackageFaucet             = "0x4023210ff781042e398c5901f39434dcd290b420"
+)
+
+//go:embed sui.json
+var suicontent []byte
+
+var config *SuiConfig
+
+type SuiConfig struct {
+	USDC   string
+	USDT   string
+	APT    string
+	BTC    string
+	DAI    string
+	ETH    string
+	MATIC  string
+	Faucet string // facute object id
+
+	PoolAPT   string `json:"Pool<APT>"`
+	PoolBTC   string `json:"Pool<BTC>"`
+	PoolDAI   string `json:"Pool<DAI>"`
+	PoolETH   string `json:"Pool<ETH>"`
+	PoolMatic string `json:"Pool<MATIC>"`
+	PoolUSDC  string `json:"Pool<USDC>"`
+	PoolUSDT  string `json:"Pool<USDT>"`
+
+	PoolManagerInfo string
+	PoolState       string
+	PriceOracle     string
+	Storage         string
+	UserManagerInfo string
+	WormholeState   string
+}
+
+func init() {
+	config = &SuiConfig{}
+	err := json.Unmarshal(suicontent, &config)
+	AssertNil(err)
+
+	config.USDC = fixAddress(config.USDC)
+	config.USDT = fixAddress(config.USDT)
+	config.APT = fixAddress(config.APT)
+	config.BTC = fixAddress(config.BTC)
+	config.DAI = fixAddress(config.DAI)
+	config.ETH = fixAddress(config.ETH)
+	config.MATIC = fixAddress(config.MATIC)
+	config.Faucet = fixAddress(config.Faucet)
+}
+
+func fixAddress(address string) string {
+	return "0x" + strings.TrimPrefix(address, "0x")
+}
+
+func GetSuiConfig() *SuiConfig {
+	return config
+}
 
 func GetDevClient() *client.Client {
 	c, err := client.Dial(DevnetRpcUrl)
-	PanicIfError(err)
+	AssertNil(err)
 	return c
 }
 
 func GetEnvAccount() *account.Account {
 	account, err := account.NewAccountWithMnemonic(os.Getenv("m"))
-	PanicIfError(err)
+	AssertNil(err)
 	return account
 }
 
-func PanicIfError(err error) {
+func AssertNil(err error) {
 	if err != nil {
+		fmt.Println(err.Error())
 		panic(err)
 	}
 }
 
 func GetDefaultContract() *gosuilending.Contract {
 	contract, err := gosuilending.NewContract(GetDevClient(), gosuilending.ContractConfig{
-		LendingPortalPackageId:     "0x481619b177aabe0f4c6c06e0b141e3373644f90e",
-		ExternalInterfacePackageId: "0xe558bd8e7a6a88a405ffd93cc71ecf1ade45686c",
-		PoolManagerInfo:            "0x00e2cd853b00a1531b5a5579156a174891543e50",
-		PoolState:                  "0x26220207229eece5c32f4200badb3333e30d1dd8",
-		PriceOracle:                "0x6895216a4f584c747c196d6bb43a39ec59f94f11",
-		Storage:                    "0xe9d6e200a86ef34a0f9388034cd66739e0c4782c",
-		WormholeState:              "0x1d8a0ac5d10100111eae5509c637ee6841d9955e",
+		LendingPortalPackageId:     PackageLendingPortal,
+		ExternalInterfacePackageId: PackageExternalInterfaces,
+		PoolManagerInfo:            config.PoolManagerInfo,
+		PoolState:                  config.PoolState,
+		PriceOracle:                config.PriceOracle,
+		Storage:                    config.Storage,
+		WormholeState:              config.WormholeState,
 	})
-	PanicIfError(err)
+	AssertNil(err)
 	return contract
 }

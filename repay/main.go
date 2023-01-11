@@ -17,22 +17,22 @@ const (
 
 func main() {
 	btcPoolObject, err := types.NewHexData(btcPool)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	acc := common.GetEnvAccount()
 	client := common.GetDevClient()
 	contract := common.GetDefaultContract()
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	signer, err := types.NewHexData(acc.Address)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	ctx := context.Background()
 	coins, err := client.GetSuiCoinsOwnedByAddress(ctx, *signer)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	gasCoin, err := coins.PickCoinNoLess(10000)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 
 	// get btc coins
 	btcCoins, err := client.GetCoinsOwnedByAddress(ctx, *signer, btcAddress)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	btcCoinObjectIds := []types.ObjectId{}
 	for _, coin := range btcCoins {
 		btcCoinObjectIds = append(btcCoinObjectIds, coin.Reference.ObjectId)
@@ -42,18 +42,18 @@ func main() {
 		btcAddress,
 	}, gosuilending.RepayArgs{
 		WormholeMessageCoins:  []types.ObjectId{},
-		WormholeMessageAmount: 0,
+		WormholeMessageAmount: "0",
 		Pool:                  *btcPoolObject,
 		RepayCoins:            btcCoinObjectIds,
-		RepayAmount:           200,
+		RepayAmount:           "200",
 	}, gosuilending.CallOptions{
 		Gas:       &gasCoin.Reference.ObjectId,
 		GasBudget: 10000,
 	})
-	common.PanicIfError(err)
+	common.AssertNil(err)
 
 	signedTx := tx.SignWith(acc.PrivateKey)
 	resp, err := client.ExecuteTransaction(ctx, *signedTx, types.TxnRequestTypeWaitForLocalExecution)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	fmt.Println(resp.EffectsCert.Certificate.TransactionDigest)
 }

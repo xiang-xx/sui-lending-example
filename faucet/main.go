@@ -10,34 +10,29 @@ import (
 	gosuilending "github.com/omnibtc/go-sui-lending"
 )
 
-const (
-	faucetPackageId = "0x13e8531463853d9a3ff017d140be14a9357f6b1d"
-	faucetObjectId  = "0x581a7ba6df5a9f2fe2d53637bfa3ce62240a4c3c"
-	usdtAddress     = "0x13e8531463853d9a3ff017d140be14a9357f6b1d::coins::USDT"
-)
-
 func main() {
+	config := common.GetSuiConfig()
 	acc := common.GetEnvAccount()
 	client := common.GetDevClient()
-	contract, err := gosuilending.NewFaucet(client, faucetPackageId, faucetObjectId)
-	common.PanicIfError(err)
+	contract, err := gosuilending.NewFaucet(client, common.PackageFaucet, config.Faucet)
+	common.AssertNil(err)
 	signer, err := types.NewHexData(acc.Address)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	ctx := context.Background()
 	coins, err := client.GetSuiCoinsOwnedByAddress(ctx, *signer)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	gasCoin, err := coins.PickCoinNoLess(1000)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	tx, err := contract.Claim(context.Background(), *signer, []string{
-		usdtAddress,
+		config.USDT,
 	}, gosuilending.CallOptions{
 		Gas:       &gasCoin.Reference.ObjectId,
 		GasBudget: 1000,
 	})
-	common.PanicIfError(err)
+	common.AssertNil(err)
 
 	signedTx := tx.SignWith(acc.PrivateKey)
 	resp, err := client.ExecuteTransaction(ctx, *signedTx, types.TxnRequestTypeWaitForLocalExecution)
-	common.PanicIfError(err)
+	common.AssertNil(err)
 	fmt.Println(resp.EffectsCert.Certificate.TransactionDigest)
 }

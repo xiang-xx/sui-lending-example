@@ -1,0 +1,24 @@
+{
+    "USDC": "4023210ff781042e398c5901f39434dcd290b420::coins::USDC",
+    "USDT": "4023210ff781042e398c5901f39434dcd290b420::coins::USDT",
+    "APT": "4023210ff781042e398c5901f39434dcd290b420::coins::APT",
+    "BTC": "4023210ff781042e398c5901f39434dcd290b420::coins::BTC",
+    "DAI": "4023210ff781042e398c5901f39434dcd290b420::coins::DAI",
+    "ETH": "4023210ff781042e398c5901f39434dcd290b420::coins::ETH",
+    "Faucet": "0x452f0713000d0d7b792d228d0c5a225e03fcc14f",
+    "MATIC": "4023210ff781042e398c5901f39434dcd290b420::coins::MATIC",
+    "Pool<APT>": "0xf5eb654bcbc82b4cb95faf9cfe342d399c977f6f",
+    "Pool<BTC>": "0x2e4681105b688f1505f87494fc37573b40c498b0",
+    "Pool<DAI>": "0x8b4d88a513bbf3c34fc6879964a1db33144062bd",
+    "Pool<ETH>": "0x00e2a18a69a1e3043d1e37b0d024c0de41c35bff",
+    "Pool<MATIC>": "0x5c0d292b7e714b9cfcd082a8ad5c8324a7685184",
+    "Pool<USDC>": "0x0f03a2820f567a0c2c576045eb43e141e88d5a99",
+    "Pool<USDT>": "0x77307418de7917000e2ff371c821a50247695fe0",
+    "PoolManagerInfo": "0x6f68637e8f8f98ac62d7a08efaeacebbcd620ce9",
+    "PoolState": "0xc4ee43d972069c4a1d7ef48624885bfbaecc5e0f",
+    "PriceOracle": "0x78d0290261faf8668b436d6ac3ef237e5b63bb67",
+    "Storage": "0xe94663840e7f81e6d2992f182f3fb8b034718309",
+   
+    "UserManagerInfo": "0x489f3e671c6d493d6b28aa1c682f71ce80c8e263",
+    "WormholeState": "0x4b9b9baf531853b47acc09ea4c8194f232c23b4b"
+}
