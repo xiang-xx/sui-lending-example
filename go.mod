@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/coming-chat/go-sui v0.0.0-20230109090012-465fe388d837
-	github.com/omnibtc/go-sui-lending v0.0.0-20230111070138-1632dda69806
+	github.com/omnibtc/go-sui-lending v0.0.0-20230111094740-7735c26bda1c
 )
 
 require (

@@ -14,10 +14,28 @@ import (
 
 const DevnetRpcUrl = "https://fullnode.devnet.sui.io"
 const (
-	PackageLendingPortal      = "0x28bc45ed3593846a57fd3bea2839baa406f4d666"
-	PackageExternalInterfaces = "0x20c2b9cb6d88de7dcf2b6ba98900058e1d58781c"
-	PackageWormholeBridge     = "0x0979dcaa8d5549a4d6cc4783fe5ef093d5e32c35"
-	PackageFaucet             = "0x4023210ff781042e398c5901f39434dcd290b420"
+	PackageLendingPortal      = "0xe63b218633c1e70ed40f9dfe591977cded363241"
+	PackageExternalInterfaces = "0xfc6568c500a90c4ec220a36eb969e4415a399f17"
+	PackageWormholeBridge     = "0xb0dfcfbc5e66f41d2d32d65dd532ab4f78a10a0f"
+	PackageFaucet             = "0x4a74f62ed7b44ee8dbfb0fc542172ab7ac1da096"
+)
+
+const (
+	DolaChainIdSui       = "0"
+	DolaChainIdAptos     = "1"
+	DolaChainIdEvm       = "2"
+	DolaChainIdPolygon   = "5"
+	DolaChainIdPolygonZk = "1422"
+)
+
+const (
+	PoolIdBTC = iota
+	PoolIdUSDT
+	PoolIdUSDC
+	PoolIdETH
+	PoolIdDAI
+	PoolIdMATIC
+	PoolIdPAT // 6
 )
 
 //go:embed sui.json
@@ -29,6 +47,7 @@ type SuiConfig struct {
 	USDC   string
 	USDT   string
 	APT    string
+	BNB    string
 	BTC    string
 	DAI    string
 	ETH    string
@@ -36,6 +55,7 @@ type SuiConfig struct {
 	Faucet string // facute object id
 
 	PoolAPT   string `json:"Pool<APT>"`
+	PoolBNB   string `json:"Pool<BNB>"`
 	PoolBTC   string `json:"Pool<BTC>"`
 	PoolDAI   string `json:"Pool<DAI>"`
 	PoolETH   string `json:"Pool<ETH>"`
@@ -59,6 +79,7 @@ func init() {
 	config.USDC = fixAddress(config.USDC)
 	config.USDT = fixAddress(config.USDT)
 	config.APT = fixAddress(config.APT)
+	config.BNB = fixAddress(config.BNB)
 	config.BTC = fixAddress(config.BTC)
 	config.DAI = fixAddress(config.DAI)
 	config.ETH = fixAddress(config.ETH)
@@ -102,6 +123,7 @@ func GetDefaultContract() *gosuilending.Contract {
 		PriceOracle:                config.PriceOracle,
 		Storage:                    config.Storage,
 		WormholeState:              config.WormholeState,
+		UserManagerInfo:            config.UserManagerInfo,
 	})
 	AssertNil(err)
 	return contract

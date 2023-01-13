@@ -1,6 +1,5 @@
 package main
 
-// 2942
 import (
 	"context"
 	"fmt"
@@ -26,6 +25,8 @@ func main() {
 	common.AssertNil(err)
 	gasCoin, err := coins.PickCoinNoLess(10000)
 	common.AssertNil(err)
+	// addressBs, err := hex.DecodeString(acc.Address[2:])
+	// common.AssertNil(err)
 
 	tx, err := contract.Borrow(context.Background(), *signer, []string{
 		config.BTC,
@@ -34,7 +35,7 @@ func main() {
 		WormholeMessageCoins:  []types.ObjectId{},
 		WormholeMessageAmount: "0",
 		Pool:                  *btcPoolObject,
-		DstChain:              "1",
+		DstChain:              common.DolaChainIdSui,
 		Amount:                "200",
 	}, gosuilending.CallOptions{
 		Gas:       &gasCoin.Reference.ObjectId,

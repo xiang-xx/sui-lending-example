@@ -9,6 +9,14 @@ github.com/omnibtc/go-sui-lending v0.0.0-20230111062113-ed1d03d0d42c h1:A1z4Lyit
 github.com/omnibtc/go-sui-lending v0.0.0-20230111062113-ed1d03d0d42c/go.mod h1:ok4a+4E3coH2gBApEW3tlyIewFIPAKHzizQYzL4+b0w=
 github.com/omnibtc/go-sui-lending v0.0.0-20230111070138-1632dda69806 h1:sxaOpy6FuQ4mVyVgtHzBVff044w7FIB0OMm6Cb51GTI=
 github.com/omnibtc/go-sui-lending v0.0.0-20230111070138-1632dda69806/go.mod h1:ok4a+4E3coH2gBApEW3tlyIewFIPAKHzizQYzL4+b0w=
+github.com/omnibtc/go-sui-lending v0.0.0-20230111084139-7d1aaf7509d2 h1:Ydy+B5LsBcqnSZIAoeQOjowZqZNj6Ino5tUVsUptIcA=
+github.com/omnibtc/go-sui-lending v0.0.0-20230111084139-7d1aaf7509d2/go.mod h1:ok4a+4E3coH2gBApEW3tlyIewFIPAKHzizQYzL4+b0w=
+github.com/omnibtc/go-sui-lending v0.0.0-20230111093058-32c90648a62c h1:IGZdUe+TirLeXXbQSW4Y9Ctl6U8fWScaseGzdcY/x0Y=
+github.com/omnibtc/go-sui-lending v0.0.0-20230111093058-32c90648a62c/go.mod h1:ok4a+4E3coH2gBApEW3tlyIewFIPAKHzizQYzL4+b0w=
+github.com/omnibtc/go-sui-lending v0.0.0-20230111094108-c525772e56be h1:Td/J0I7zJqaGV/ecgfP7iBSeQiO/M9fWad+2bYZkj0s=
+github.com/omnibtc/go-sui-lending v0.0.0-20230111094108-c525772e56be/go.mod h1:ok4a+4E3coH2gBApEW3tlyIewFIPAKHzizQYzL4+b0w=
+github.com/omnibtc/go-sui-lending v0.0.0-20230111094740-7735c26bda1c h1:dJQ9P3kizsr1BSRgcdTD3u+l+jxEkuQkiTSAdcBHjWU=
+github.com/omnibtc/go-sui-lending v0.0.0-20230111094740-7735c26bda1c/go.mod h1:ok4a+4E3coH2gBApEW3tlyIewFIPAKHzizQYzL4+b0w=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/stretchr/testify v1.8.0 h1:pSgiaMZlXftHpm5L7V1+rVB+AZJydKsMxsQBIJw4PKk=
 github.com/tyler-smith/go-bip39 v1.1.0 h1:5eUemwrMargf3BSLRRCalXT93Ns6pQJIjYQN2nyfOP8=

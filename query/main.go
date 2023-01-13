@@ -10,11 +10,6 @@ import (
 	gosuilending "github.com/omnibtc/go-sui-lending"
 )
 
-const (
-	usdtAddress = "0x13e8531463853d9a3ff017d140be14a9357f6b1d::coins::USDT"
-	btcAddress  = "0x13e8531463853d9a3ff017d140be14a9357f6b1d::coins::BTC"
-)
-
 func main() {
 	acc := common.GetEnvAccount()
 	client := common.GetDevClient()
@@ -32,27 +27,34 @@ func main() {
 		GasBudget: 10000,
 	}
 
-	liquid, err := contract.GetDolaTokenLiquidity(ctx, *signer, usdtAddress, callOptions)
+	dolaUserId, err := contract.GetDolaUserId(ctx, *signer, 0, signer.String(), callOptions)
 	common.AssertNil(err)
-	println("dola token liquidity:", liquid.String())
 
-	appTokenLiquidity, err := contract.GetAppTokenLiquidity(ctx, *signer, 0, usdtAddress, callOptions)
+	liquid, err := contract.GetDolaTokenLiquidity(ctx, *signer, common.PoolIdUSDT, callOptions)
 	common.AssertNil(err)
-	println("app token liquidity:", appTokenLiquidity.String())
+	println("dola USDT token liquidity:", liquid.String())
 
-	debtAmount, debtValue, err := contract.GetUserTokenDebt(ctx, *signer, btcAddress, callOptions)
+	liquid, err = contract.GetDolaTokenLiquidity(ctx, *signer, common.PoolIdBTC, callOptions)
+	common.AssertNil(err)
+	println("dola BTC token liquidity:", liquid.String())
+
+	// appTokenLiquidity, err := contract.GetAppTokenLiquidity(ctx, *signer, 0, common.PoolIdUSDT, callOptions)
+	// common.AssertNil(err)
+	// println("app USDT token liquidity:", appTokenLiquidity.String())
+
+	debtAmount, debtValue, err := contract.GetUserTokenDebt(ctx, *signer, dolaUserId, common.PoolIdBTC, callOptions)
 	common.AssertNil(err)
 	println("user btc token debt", debtAmount.String(), " ", debtValue.String())
 
-	collateralAmount, collateralValue, err := contract.GetUserCollateral(ctx, *signer, usdtAddress, callOptions)
+	collateralAmount, collateralValue, err := contract.GetUserCollateral(ctx, *signer, dolaUserId, common.PoolIdUSDT, callOptions)
 	common.AssertNil(err)
 	println("collateral: ", collateralAmount.String(), " ", collateralValue.String())
 
-	userLendingInfo, err := contract.GetUserLendingInfo(ctx, *signer, callOptions)
+	userLendingInfo, err := contract.GetUserLendingInfo(ctx, *signer, dolaUserId, callOptions)
 	common.AssertNil(err)
 	fmt.Printf("lending info %v\n", userLendingInfo)
 
-	reserveInfo, err := contract.GetReserveInfo(ctx, *signer, usdtAddress, callOptions)
+	reserveInfo, err := contract.GetReserveInfo(ctx, *signer, common.PoolIdUSDT, callOptions)
 	common.AssertNil(err)
 	fmt.Printf("%v\n", reserveInfo)
 
@@ -62,7 +64,7 @@ func main() {
 	// 	println("reason:", err.Error())
 	// }
 
-	canBorrowAmount, err := contract.GetUserAllowedBorrow(ctx, *signer, btcAddress, callOptions)
+	canBorrowAmount, err := contract.GetUserAllowedBorrow(ctx, *signer, dolaUserId, common.PoolIdBTC, callOptions)
 	println("user can borrow btc:", canBorrowAmount.String())
 	if err != nil {
 		println("reason:", err.Error())
