@@ -28,6 +28,13 @@ func main() {
 	// addressBs, err := hex.DecodeString(acc.Address[2:])
 	// common.AssertNil(err)
 
+	btcLiquidity, err := contract.GetDolaTokenLiquidity(context.Background(), *signer, common.PoolIdBTC, gosuilending.CallOptions{
+		Gas:       &gasCoin.Reference.ObjectId,
+		GasBudget: 10000,
+	})
+	common.AssertNil(err)
+	fmt.Printf("btc liquidity %s\n", btcLiquidity)
+
 	tx, err := contract.Borrow(context.Background(), *signer, []string{
 		config.BTC,
 	}, gosuilending.BorrowArgs{

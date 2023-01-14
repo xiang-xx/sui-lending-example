@@ -46,9 +46,9 @@ func main() {
 	common.AssertNil(err)
 	println("user btc token debt", debtAmount.String(), " ", debtValue.String())
 
-	collateralAmount, collateralValue, err := contract.GetUserCollateral(ctx, *signer, dolaUserId, common.PoolIdUSDT, callOptions)
+	collateral, err := contract.GetUserCollateral(ctx, *signer, dolaUserId, common.PoolIdUSDT, callOptions)
 	common.AssertNil(err)
-	println("collateral: ", collateralAmount.String(), " ", collateralValue.String())
+	println("collateral: ", collateral.CollateralAmount.String(), " ", collateral.CollateralValue.String())
 
 	userLendingInfo, err := contract.GetUserLendingInfo(ctx, *signer, dolaUserId, callOptions)
 	common.AssertNil(err)

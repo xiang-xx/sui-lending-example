@@ -2,6 +2,8 @@ github.com/coming-chat/go-aptos v0.0.0-20221013022715-39f91035c785 h1:xIOXIW3uXa
 github.com/coming-chat/go-aptos v0.0.0-20221013022715-39f91035c785/go.mod h1:HaGBPmQOlKzxkbGancRSX8wcwDxvj9Zs173CSla43vE=
 github.com/coming-chat/go-sui v0.0.0-20230109090012-465fe388d837 h1:6C27rdxa/BGyccjSI5Jq/dn2PiwqsKCXVfVvIauJ9d8=
 github.com/coming-chat/go-sui v0.0.0-20230109090012-465fe388d837/go.mod h1:IT0m3ZSiKSXgitJT6rMuMAlfNal4ounjryXWqoNgrd8=
+github.com/coming-chat/go-sui v0.0.0-20230113032427-957159fd53c7 h1:3wK0xqAl4J3fE64z0MHqy4iS9GmURRpg25kdHwmnNmc=
+github.com/coming-chat/go-sui v0.0.0-20230113032427-957159fd53c7/go.mod h1:IT0m3ZSiKSXgitJT6rMuMAlfNal4ounjryXWqoNgrd8=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/omnibtc/go-sui-lending v0.0.0-20230111031456-0a2f6356c437 h1:RF3fA1sm/ECadVZrwHXqgqdxUs2Nl0eCseO2eOrMrjo=
 github.com/omnibtc/go-sui-lending v0.0.0-20230111031456-0a2f6356c437/go.mod h1:ok4a+4E3coH2gBApEW3tlyIewFIPAKHzizQYzL4+b0w=
@@ -17,6 +19,8 @@ github.com/omnibtc/go-sui-lending v0.0.0-20230111094108-c525772e56be h1:Td/J0I7z
 github.com/omnibtc/go-sui-lending v0.0.0-20230111094108-c525772e56be/go.mod h1:ok4a+4E3coH2gBApEW3tlyIewFIPAKHzizQYzL4+b0w=
 github.com/omnibtc/go-sui-lending v0.0.0-20230111094740-7735c26bda1c h1:dJQ9P3kizsr1BSRgcdTD3u+l+jxEkuQkiTSAdcBHjWU=
 github.com/omnibtc/go-sui-lending v0.0.0-20230111094740-7735c26bda1c/go.mod h1:ok4a+4E3coH2gBApEW3tlyIewFIPAKHzizQYzL4+b0w=
+github.com/omnibtc/go-sui-lending v0.0.0-20230114085359-2b6cfb083759 h1:u5rmUA9shJ+CiMleSy98GFRuER8FbiY9iTdH9ZM1Hgc=
+github.com/omnibtc/go-sui-lending v0.0.0-20230114085359-2b6cfb083759/go.mod h1:YC3J87rThC+pz1pU8pZ8YhUm3i2pMs+myx6mSXXXxjU=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/stretchr/testify v1.8.0 h1:pSgiaMZlXftHpm5L7V1+rVB+AZJydKsMxsQBIJw4PKk=
 github.com/tyler-smith/go-bip39 v1.1.0 h1:5eUemwrMargf3BSLRRCalXT93Ns6pQJIjYQN2nyfOP8=
