@@ -14,10 +14,10 @@ import (
 
 const DevnetRpcUrl = "https://fullnode.devnet.sui.io"
 const (
-	PackageLendingPortal      = "0xe63b218633c1e70ed40f9dfe591977cded363241"
-	PackageExternalInterfaces = "0xfc6568c500a90c4ec220a36eb969e4415a399f17"
-	PackageWormholeBridge     = "0xb0dfcfbc5e66f41d2d32d65dd532ab4f78a10a0f"
-	PackageFaucet             = "0x4a74f62ed7b44ee8dbfb0fc542172ab7ac1da096"
+	PackageLendingPortal      = "0x0ea2ebec77a430932699c598d286cdd72cff25c3"
+	PackageExternalInterfaces = "0xd302b6887e60b2018d046061f01d0d1241ad9455"
+	PackageWormholeBridge     = "0x9286925aa8f12b71ca9398133dd0becedde9ee4d"
+	PackageFaucet             = "0x7b03c8e330e491c2a1bad31b43b781b9d7d3114c"
 )
 
 const (
@@ -35,7 +35,8 @@ const (
 	PoolIdETH
 	PoolIdDAI
 	PoolIdMATIC
-	PoolIdPAT // 6
+	PoolIdAPT // 6
+	PoolIdBNB
 )
 
 //go:embed sui.json

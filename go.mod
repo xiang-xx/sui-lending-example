@@ -3,8 +3,8 @@ module sui-lending-example
 go 1.19
 
 require (
-	github.com/coming-chat/go-sui v0.0.0-20230113032427-957159fd53c7
-	github.com/omnibtc/go-sui-lending v0.0.0-20230114085359-2b6cfb083759
+	github.com/coming-chat/go-sui v0.0.0-20230116085852-f37dad53e41f
+	github.com/omnibtc/go-sui-lending v0.0.0-20230117024232-809b9ff365d8
 )
 
 require (
