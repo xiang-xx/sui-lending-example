@@ -31,7 +31,7 @@ func main() {
 	})
 	common.AssertNil(err)
 
-	signedTx := tx.SignWith(acc.PrivateKey)
+	signedTx := tx.SignSerializedSigWith(acc.PrivateKey)
 	resp, err := client.ExecuteTransaction(ctx, *signedTx, types.TxnRequestTypeWaitForLocalExecution)
 	common.AssertNil(err)
 	fmt.Println(resp.EffectsCert.Certificate.TransactionDigest)

@@ -12,12 +12,12 @@ import (
 	gosuilending "github.com/omnibtc/go-sui-lending"
 )
 
-const DevnetRpcUrl = "https://fullnode.devnet.sui.io"
+const DevnetRpcUrl = "https://fullnode.testnet.sui.io"
 const (
-	PackageLendingPortal      = "0x0ea2ebec77a430932699c598d286cdd72cff25c3"
-	PackageExternalInterfaces = "0xd302b6887e60b2018d046061f01d0d1241ad9455"
-	PackageWormholeBridge     = "0x9286925aa8f12b71ca9398133dd0becedde9ee4d"
-	PackageFaucet             = "0x7b03c8e330e491c2a1bad31b43b781b9d7d3114c"
+	PackageLendingPortal      = "0x725996f982c461ddb1060cb64a7b47246e7332be"
+	PackageExternalInterfaces = "0xaa65494974bfa11425bfbff836db69cf7950f3ef"
+	PackageWormholeBridge     = "0x10ec199c006b64d40511ca7f2f0527051577d23f"
+	PackageFaucet             = "0x72b846eca3c7f91961ec3cae20441be96a21e1fe"
 )
 
 const (
