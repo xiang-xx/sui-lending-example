@@ -6,6 +6,7 @@ import (
 
 	"sui-lending-example/common"
 
+	"github.com/coming-chat/go-sui/sui_types"
 	"github.com/coming-chat/go-sui/types"
 	gosuilending "github.com/omnibtc/go-sui-lending"
 )
@@ -21,18 +22,25 @@ func main() {
 	ctx := context.Background()
 	coins, err := client.GetSuiCoinsOwnedByAddress(ctx, *signer)
 	common.AssertNil(err)
-	gasCoin, err := coins.PickCoinNoLess(1000)
+	gasCoin, err := coins.PickCoinNoLess(common.GasBudget)
 	common.AssertNil(err)
 	tx, err := contract.Claim(context.Background(), *signer, []string{
 		config.USDT,
 	}, gosuilending.CallOptions{
-		Gas:       &gasCoin.Reference.ObjectId,
-		GasBudget: 1000,
+		Gas:       &gasCoin.Reference().ObjectId,
+		GasBudget: common.GasBudget,
 	})
 	common.AssertNil(err)
 
-	signedTx := tx.SignSerializedSigWith(acc.PrivateKey)
-	resp, err := client.ExecuteTransaction(ctx, *signedTx, types.TxnRequestTypeWaitForLocalExecution)
+	signature, err := acc.SignSecureWithoutEncode(tx.TxBytes, sui_types.DefaultIntent())
 	common.AssertNil(err)
-	fmt.Println(resp.EffectsCert.Certificate.TransactionDigest)
+	options := types.SuiTransactionBlockResponseOptions{
+		ShowEffects: true,
+	}
+	resp, err := client.ExecuteTransactionBlock(
+		context.TODO(), tx.TxBytes, []any{signature}, &options,
+		types.TxnRequestTypeWaitForLocalExecution,
+	)
+	common.AssertNil(err)
+	fmt.Println(resp.Effects.TransactionDigest)
 }

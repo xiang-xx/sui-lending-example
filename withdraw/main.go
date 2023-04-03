@@ -33,11 +33,9 @@ func main() {
 	tx, err := contract.Withdraw(context.Background(), *signer, []string{
 		usdtAddress,
 	}, gosuilending.WithdrawArgs{
-		WormholeMessageCoins:  []types.ObjectId{},
-		WormholeMessageAmount: "0",
-		Pool:                  *usdtPoolObject,
-		DstChain:              "1",
-		Amount:                "49999999",
+		Pool:     *usdtPoolObject,
+		DstChain: "1",
+		Amount:   "49999999",
 	}, gosuilending.CallOptions{
 		Gas:       &gasCoin.Reference.ObjectId,
 		GasBudget: 10000,

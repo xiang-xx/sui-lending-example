@@ -41,11 +41,9 @@ func main() {
 	tx, err := contract.Repay(context.Background(), *signer, []string{
 		btcAddress,
 	}, gosuilending.RepayArgs{
-		WormholeMessageCoins:  []types.ObjectId{},
-		WormholeMessageAmount: "0",
-		Pool:                  *btcPoolObject,
-		RepayCoins:            btcCoinObjectIds,
-		RepayAmount:           "200",
+		Pool:        *btcPoolObject,
+		RepayCoins:  btcCoinObjectIds,
+		RepayAmount: "200",
 	}, gosuilending.CallOptions{
 		Gas:       &gasCoin.Reference.ObjectId,
 		GasBudget: 10000,

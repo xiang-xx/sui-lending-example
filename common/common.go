@@ -13,11 +13,14 @@ import (
 )
 
 const DevnetRpcUrl = "https://fullnode.testnet.sui.io"
+const GasBudget = 10_000_000
+
 const (
-	PackageLendingPortal      = "0x725996f982c461ddb1060cb64a7b47246e7332be"
-	PackageExternalInterfaces = "0xaa65494974bfa11425bfbff836db69cf7950f3ef"
-	PackageWormholeBridge     = "0x10ec199c006b64d40511ca7f2f0527051577d23f"
-	PackageFaucet             = "0x72b846eca3c7f91961ec3cae20441be96a21e1fe"
+	PackageLendingPortal      = "0x5b81c31943358fcf8f20d2c9b92adf6b47062aa4b01afb2e5c901920807c3e09"
+	PackageExternalInterfaces = "0x25bf584ec396b75ee3ab0367a5b6ebdb82f8fd8bf42f5bd00c281464d604a994"
+	PackageWormholeBridge     = "0xe198cbf3b61678ba33be2a53965c4d68a2b55d00aea67af9038f54c4dba1ec61"
+	// test_coins
+	PackageFaucet = "0x54fc06a12aeed0752c6db5d949fcf4554bd320ca69676ee9d3085ba946b91af0"
 )
 
 const (
@@ -70,6 +73,10 @@ type SuiConfig struct {
 	Storage         string
 	UserManagerInfo string
 	WormholeState   string
+	CoreState       string
+	LendingPortal   string
+	Clock           string
+	PoolApproval    string
 }
 
 func init() {
@@ -125,6 +132,10 @@ func GetDefaultContract() *gosuilending.Contract {
 		Storage:                    config.Storage,
 		WormholeState:              config.WormholeState,
 		UserManagerInfo:            config.UserManagerInfo,
+		CoreState:                  config.CoreState,
+		LendingPortal:              config.LendingPortal,
+		Clock:                      config.Clock,
+		PoolApproval:               config.PoolApproval,
 	})
 	AssertNil(err)
 	return contract

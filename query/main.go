@@ -19,16 +19,30 @@ func main() {
 	ctx := context.Background()
 	coins, err := client.GetSuiCoinsOwnedByAddress(ctx, *signer)
 	common.AssertNil(err)
-	gasCoin, err := coins.PickCoinNoLess(10000)
+	gasCoin, err := coins.PickCoinNoLess(common.GasBudget)
 	common.AssertNil(err)
 
 	callOptions := gosuilending.CallOptions{
-		Gas:       &gasCoin.Reference.ObjectId,
-		GasBudget: 10000,
+		Gas:       &gasCoin.Reference().ObjectId,
+		GasBudget: common.GasBudget,
 	}
+
+	// for _, userId := range []string{"13", "17", "18"} {
+	// 	f, err := contract.GetUserHealthFactor(ctx, *signer, userId, callOptions)
+	// 	common.AssertNil(err)
+	// 	d, _ := big.NewInt(0).SetString("1000000000000000000000000000", 10)
+	// 	ff := decimal.NewFromBigInt(f, 0)
+	// 	dd := decimal.NewFromBigInt(d, 0)
+	// 	h := ff.Div(dd)
+	// 	res, _ := h.Float64()
+	// 	fmt.Printf("%s, %.5f\n", userId, res)
+	// }
+	// return
 
 	dolaUserId, err := contract.GetDolaUserId(ctx, *signer, 0, signer.String(), callOptions)
 	common.AssertNil(err)
+
+	println(dolaUserId)
 
 	liquid, err := contract.GetDolaTokenLiquidity(ctx, *signer, common.PoolIdUSDT, callOptions)
 	common.AssertNil(err)

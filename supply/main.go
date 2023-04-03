@@ -6,6 +6,7 @@ import (
 
 	"sui-lending-example/common"
 
+	"github.com/coming-chat/go-sui/sui_types"
 	"github.com/coming-chat/go-sui/types"
 	gosuilending "github.com/omnibtc/go-sui-lending"
 )
@@ -23,33 +24,38 @@ func main() {
 	ctx := context.Background()
 	coins, err := client.GetSuiCoinsOwnedByAddress(ctx, *signer)
 	common.AssertNil(err)
-	gasCoin, err := coins.PickCoinNoLess(10000)
+	gasCoin, err := coins.PickCoinNoLess(common.GasBudget)
 	common.AssertNil(err)
 
 	// get usdt coins
-	usdtCoins, err := client.GetCoinsOwnedByAddress(ctx, *signer, config.USDT)
+	usdtCoins, err := client.GetCoins(ctx, *signer, &config.USDT, nil, 100)
 	common.AssertNil(err)
 	usdtCoinObjectIds := []types.ObjectId{}
-	for _, coin := range usdtCoins {
-		usdtCoinObjectIds = append(usdtCoinObjectIds, coin.Reference.ObjectId)
+	for _, coin := range usdtCoins.Data {
+		usdtCoinObjectIds = append(usdtCoinObjectIds, coin.Reference().ObjectId)
 	}
 
 	tx, err := contract.Supply(context.Background(), *signer, []string{
 		config.USDT,
 	}, gosuilending.SupplyArgs{
-		WormholeMessageCoins:  []types.ObjectId{},
-		WormholeMessageAmount: "0",
-		Pool:                  *usdtPoolObject,
-		DepositCoins:          usdtCoinObjectIds,
-		DepositAmount:         "50000000",
+		Pool:          *usdtPoolObject,
+		DepositCoins:  usdtCoinObjectIds,
+		DepositAmount: "50000000",
 	}, gosuilending.CallOptions{
-		Gas:       &gasCoin.Reference.ObjectId,
-		GasBudget: 10000,
+		Gas:       &gasCoin.Reference().ObjectId,
+		GasBudget: common.GasBudget,
 	})
 	common.AssertNil(err)
 
-	signedTx := tx.SignSerializedSigWith(acc.PrivateKey)
-	resp, err := client.ExecuteTransaction(ctx, *signedTx, types.TxnRequestTypeWaitForLocalExecution)
+	signature, err := acc.SignSecureWithoutEncode(tx.TxBytes, sui_types.DefaultIntent())
 	common.AssertNil(err)
-	fmt.Println(resp.EffectsCert.Certificate.TransactionDigest)
+	options := types.SuiTransactionBlockResponseOptions{
+		ShowEffects: true,
+	}
+	resp, err := client.ExecuteTransactionBlock(
+		context.TODO(), tx.TxBytes, []any{signature}, &options,
+		types.TxnRequestTypeWaitForLocalExecution,
+	)
+	common.AssertNil(err)
+	fmt.Println(resp.Effects.TransactionDigest)
 }
